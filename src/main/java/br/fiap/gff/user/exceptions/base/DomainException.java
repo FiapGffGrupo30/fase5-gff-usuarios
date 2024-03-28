@@ -1,4 +1,4 @@
-package br.fiap.gff.user.exceptions;
+package br.fiap.gff.user.exceptions.base;
 
 public class DomainException extends RuntimeException {
 

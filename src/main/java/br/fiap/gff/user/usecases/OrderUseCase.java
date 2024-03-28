@@ -1,6 +1,6 @@
 package br.fiap.gff.user.usecases;
 
-import br.fiap.gff.user.dto.CreateOrderRequest;
+import br.fiap.gff.user.dto.OrderCreateRequest;
 import br.fiap.gff.user.models.Customer;
 import br.fiap.gff.user.models.Order;
 
@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public interface OrderUseCase {
 
-    UUID create(CreateOrderRequest request, Customer customer);
+    UUID create(OrderCreateRequest request, Customer customer);
 
     List<Order> filterAllByCustomerId(Long customerId);
 

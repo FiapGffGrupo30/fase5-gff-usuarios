@@ -9,9 +9,9 @@ import java.util.UUID;
 @Data
 @Builder
 @RegisterForReflection
-public class SendOrderRequest {
+public class OrderSendRequest {
 
     private Long customerId;
     private UUID correlationalId;
-    private ItemRequest[] items;
+    private OrderItemRequest[] items;
 }

@@ -9,7 +9,7 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ReceiveOrderResponse {
+public class OrderReceivedResponse {
 
     private Long customerId;
     private UUID correlationalId;

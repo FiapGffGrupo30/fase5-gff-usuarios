@@ -1,7 +1,7 @@
 package br.fiap.gff.user.controllers;
 
-import br.fiap.gff.user.dto.CreateCustomerRequest;
-import br.fiap.gff.user.dto.CreateOrderRequest;
+import br.fiap.gff.user.dto.CustomerCreateRequest;
+import br.fiap.gff.user.dto.OrderCreateRequest;
 import br.fiap.gff.user.models.Customer;
 import br.fiap.gff.user.models.Identity;
 import br.fiap.gff.user.models.Order;
@@ -32,7 +32,7 @@ public class CustomerController {
     @POST
     @Path("/signIn")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response signIn(CreateCustomerRequest request) {
+    public Response signIn(CustomerCreateRequest request) {
         Customer c = customer.save(request.toCustomer());
         Identity u = user.save(request.toIdentity(c));
         return Response.created(URI.create("/customer/" + c.getId())).entity(u).build();
@@ -73,7 +73,7 @@ public class CustomerController {
     @RolesAllowed("CUSTOMER")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response sendOrder(CreateOrderRequest request) {
+    public Response sendOrder(OrderCreateRequest request) {
         Customer c = customer.getById(request.getCustomerId());
         UUID correlationalId = order.create(request, c);
         return Response.created(URI.create("/customer/" + c.getId() + "/orders/" + correlationalId)).build();

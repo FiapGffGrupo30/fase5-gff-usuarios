@@ -1,6 +1,7 @@
 package br.fiap.gff.user.exceptions;
 
 import br.fiap.gff.user.dto.ErrorResponse;
+import br.fiap.gff.user.exceptions.base.DomainException;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.ExceptionMapper;
 import jakarta.ws.rs.ext.Provider;

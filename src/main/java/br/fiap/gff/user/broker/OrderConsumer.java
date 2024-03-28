@@ -1,6 +1,6 @@
 package br.fiap.gff.user.broker;
 
-import br.fiap.gff.user.dto.ReceiveOrderResponse;
+import br.fiap.gff.user.dto.OrderReceivedResponse;
 import br.fiap.gff.user.usecases.OrderUseCase;
 import io.vertx.core.json.JsonObject;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -15,7 +15,7 @@ public class OrderConsumer {
 
     @Incoming("received-order")
     public void receiveOrder(JsonObject message) {
-        ReceiveOrderResponse response = message.mapTo(ReceiveOrderResponse.class);
+        OrderReceivedResponse response = message.mapTo(OrderReceivedResponse.class);
         order.updateStatusByCorrelationalId(response.getCorrelationalId(), response.getStatus());
     }
 

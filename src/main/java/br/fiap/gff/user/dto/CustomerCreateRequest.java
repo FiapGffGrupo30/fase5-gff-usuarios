@@ -9,7 +9,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class CreateCustomerRequest {
+public class CustomerCreateRequest {
 
     private String username;
     private String password;
@@ -33,15 +33,19 @@ public class CreateCustomerRequest {
                 this.document,
                 this.email,
                 this.phone,
-                new Address(
-                        this.street,
-                        this.number,
-                        this.neighborhood,
-                        this.city,
-                        this.state,
-                        this.zipCode
-                ),
+                getAddress(),
                 LocalDateTime.now()
+        );
+    }
+
+    private Address getAddress() {
+        return new Address(
+                this.street,
+                this.number,
+                this.neighborhood,
+                this.city,
+                this.state,
+                this.zipCode
         );
     }
 

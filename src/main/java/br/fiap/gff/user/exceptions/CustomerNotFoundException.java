@@ -1,5 +1,7 @@
 package br.fiap.gff.user.exceptions;
 
+import br.fiap.gff.user.exceptions.base.DomainException;
+
 import java.io.Serial;
 
 public class CustomerNotFoundException extends DomainException {

@@ -3,9 +3,9 @@ package br.fiap.gff.user.dto;
 import lombok.Data;
 
 @Data
-public class CreateOrderRequest {
+public class OrderCreateRequest {
 
     private Long customerId;
-    private ItemRequest[] items;
+    private OrderItemRequest[] items;
 
 }
