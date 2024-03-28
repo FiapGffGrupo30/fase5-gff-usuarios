@@ -11,7 +11,7 @@ import java.util.UUID;
 @ApplicationScoped
 public class OrderProducer {
 
-    @Channel("send-order")
+    @Channel("send-orders")
     Emitter<OrderSendRequest> sendOrderEmmiter;
 
     public void sendOrder(OrderCreateRequest request, UUID correlationalId) {
