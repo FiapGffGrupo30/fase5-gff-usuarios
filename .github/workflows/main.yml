@@ -50,7 +50,7 @@ jobs:
         ECR_REPOSITORY=fase5-gff-usuarios
         IMAGE_TAG=latest
 
-        docker build -f spg30-user/src/main/docker/Dockerfile.jvm -t $ECR_REPOSITORY:$IMAGE_TAG .
+        docker build -f src/main/docker/Dockerfile.jvm -t $ECR_REPOSITORY:$IMAGE_TAG .
         docker tag $ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
