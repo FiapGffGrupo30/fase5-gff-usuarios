@@ -28,9 +28,9 @@ jobs:
         key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
         restore-keys: ${{ runner.os }}-m2
 
-    - name: Build with Maven
+    - name: Build with Gradlew
       #run: mvn clean package -Dmaven.test.skip=true
-      run: ./gradlew build -Dquarkus.package.type=native
+      run: chmod 777 ./gradlew && ./gradlew build -Dquarkus.package.type=native
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
