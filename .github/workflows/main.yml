@@ -30,7 +30,7 @@ jobs:
 
     - name: Build with Gradlew
       #run: mvn clean package -Dmaven.test.skip=true
-      run: chmod 777 ./gradlew && ./gradlew build -Dquarkus.package.type=native
+      run: chmod 777 ./gradlew && ./gradlew build
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
