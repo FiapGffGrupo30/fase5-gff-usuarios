@@ -12,7 +12,15 @@ public class DomainExceptionHandler implements ExceptionMapper<DomainException> 
     public Response toResponse(DomainException e) {
         ErrorResponse response = new ErrorResponse();
         response.setMessage(e.getMessage());
-        response.setStatusCode(Response.Status.BAD_REQUEST.getStatusCode());
-        return Response.status(Response.Status.BAD_REQUEST).entity(response).build();
+        switch (e.getErrorType()) {
+            case NOT_FOUND -> response.setStatus(Response.Status.NOT_FOUND);
+            case BAD_REQUEST -> response.setStatus(Response.Status.BAD_REQUEST);
+            case FORBIDDEN -> response.setStatus(Response.Status.FORBIDDEN);
+            case UNAUTHORIZED -> response.setStatus(Response.Status.UNAUTHORIZED);
+            case INTERNAL_SERVER_ERROR -> response.setStatus(Response.Status.INTERNAL_SERVER_ERROR);
+            default -> response.setStatus(Response.Status.BAD_GATEWAY);
+        }
+        response.setStatusCode(response.getStatus().getStatusCode());
+        return Response.status(response.getStatus()).entity(response).build();
     }
 }

@@ -1,4 +1,4 @@
-package br.fiap.gff.user.broker;
+package br.fiap.gff.user.events;
 
 import br.fiap.gff.user.dto.OrderCreateRequest;
 import br.fiap.gff.user.dto.OrderSendRequest;
@@ -9,12 +9,12 @@ import org.eclipse.microprofile.reactive.messaging.Emitter;
 import java.util.UUID;
 
 @ApplicationScoped
-public class OrderProducer {
+public class OrderSendEvent {
 
     @Channel("send-orders")
     Emitter<OrderSendRequest> sendOrderEmmiter;
 
-    public void sendOrder(OrderCreateRequest request, UUID correlationalId) {
+    public void send(OrderCreateRequest request, UUID correlationalId) {
         OrderSendRequest orderSendRequest = OrderSendRequest.builder()
                 .transactionId(correlationalId)
                 .customerId(request.getCustomerId())

@@ -1,4 +1,4 @@
-package br.fiap.gff.user.broker;
+package br.fiap.gff.user.events;
 
 import br.fiap.gff.user.dto.OrderUpdateRequest;
 import br.fiap.gff.user.usecases.OrderUseCase;
@@ -9,12 +9,12 @@ import org.eclipse.microprofile.reactive.messaging.Incoming;
 
 @ApplicationScoped
 @RequiredArgsConstructor
-public class OrderConsumer {
+public class OrderReceiveEvent {
 
     private final OrderUseCase order;
 
     @Incoming("update-orders")
-    public void receiveOrder(JsonObject message) {
+    public void handle(JsonObject message) {
         OrderUpdateRequest response = message.mapTo(OrderUpdateRequest.class);
         order.updateStatusByCorrelationalId(response.getCorrelationalId(), response.getStatus());
     }
