@@ -47,7 +47,7 @@ jobs:
       id: build-spg30-user-image
       run: |
         ECR_REGISTRY=${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY=spg30-user
+        ECR_REPOSITORY=fase5-gff-usuarios
         IMAGE_TAG=latest
 
         docker build -f spg30-user/src/main/docker/Dockerfile.jvm -t $ECR_REPOSITORY:$IMAGE_TAG .
