@@ -23,6 +23,7 @@ public class Identity {
     private Long id;
 
     @Username
+    @Column(unique = true)
     private String username;
 
     @Password

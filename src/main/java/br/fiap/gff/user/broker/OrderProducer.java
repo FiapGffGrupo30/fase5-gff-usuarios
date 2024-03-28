@@ -16,7 +16,7 @@ public class OrderProducer {
 
     public void sendOrder(OrderCreateRequest request, UUID correlationalId) {
         OrderSendRequest orderSendRequest = OrderSendRequest.builder()
-                .correlationalId(correlationalId)
+                .transactionId(correlationalId)
                 .customerId(request.getCustomerId())
                 .items(request.getItems())
                 .build();

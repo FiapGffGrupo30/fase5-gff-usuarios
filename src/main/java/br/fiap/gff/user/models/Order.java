@@ -11,7 +11,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "CustomerOrder", indexes = @Index(name = "idx_correlationalId", columnList = "correlationalId"))
+@Table(name = "CustomerOrder", indexes = @Index(name = "idx_transactionId", columnList = "transactionId"))
 public class Order {
 
     @Id
@@ -19,7 +19,7 @@ public class Order {
     private Long id;
 
     @Column(unique = true)
-    private UUID correlationalId;
+    private UUID transactionId;
 
     private String status;
 

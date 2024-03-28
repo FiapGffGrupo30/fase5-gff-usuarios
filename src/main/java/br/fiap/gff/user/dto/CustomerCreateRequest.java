@@ -3,10 +3,14 @@ package br.fiap.gff.user.dto;
 import br.fiap.gff.user.models.Address;
 import br.fiap.gff.user.models.Customer;
 import br.fiap.gff.user.models.Identity;
+import br.fiap.gff.user.models.Wallet;
 import io.quarkus.elytron.security.common.BcryptUtil;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 public class CustomerCreateRequest {
@@ -14,6 +18,7 @@ public class CustomerCreateRequest {
     private String username;
     private String password;
     private String fullName;
+    private LocalDate birthDate;
     private String document;
     private String email;
     private String phone;
@@ -26,14 +31,17 @@ public class CustomerCreateRequest {
 
     public Customer toCustomer() {
         String nickName = this.fullName.split(" ")[0];
+        Set<Wallet> wallets = new HashSet<>();
         return new Customer(
                 null,
                 this.fullName,
                 nickName,
+                this.birthDate,
                 this.document,
                 this.email,
                 this.phone,
                 getAddress(),
+                wallets,
                 LocalDateTime.now()
         );
     }

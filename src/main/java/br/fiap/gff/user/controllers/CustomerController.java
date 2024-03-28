@@ -2,12 +2,15 @@ package br.fiap.gff.user.controllers;
 
 import br.fiap.gff.user.dto.CustomerCreateRequest;
 import br.fiap.gff.user.dto.OrderCreateRequest;
+import br.fiap.gff.user.dto.WalletInsertRequest;
 import br.fiap.gff.user.models.Customer;
 import br.fiap.gff.user.models.Identity;
 import br.fiap.gff.user.models.Order;
+import br.fiap.gff.user.models.Wallet;
 import br.fiap.gff.user.usecases.CustomerUseCase;
 import br.fiap.gff.user.usecases.IdentityUseCase;
 import br.fiap.gff.user.usecases.OrderUseCase;
+import br.fiap.gff.user.usecases.TransactionUseCase;
 import io.quarkus.logging.Log;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.ws.rs.*;
@@ -28,6 +31,7 @@ public class CustomerController {
     private final CustomerUseCase customer;
     private final IdentityUseCase user;
     private final OrderUseCase order;
+    private final TransactionUseCase transaction;
 
     @POST
     @Path("/signIn")
@@ -43,9 +47,13 @@ public class CustomerController {
     @RolesAllowed("CUSTOMER")
     @Produces(MediaType.TEXT_PLAIN)
     public Response login(@Context SecurityContext ctx) {
-        String logMessage = String.format("User %s logged in", ctx.getUserPrincipal().getName());
+        String username = ctx.getUserPrincipal().getName();
+        Customer c = user.getCustomerByUsername(username);
+        Wallet mainWallet = c.getWallets().stream().filter(Wallet::getMain).findFirst().orElse(null);
+        UUID transactionId = transaction.create(c.getId(), mainWallet);
+        String logMessage = String.format("User %s logged in - Transaction ID: %s", username, transactionId);
         Log.info(logMessage);
-        return Response.noContent().build();
+        return Response.ok(transactionId.toString()).build();
     }
 
     @GET
@@ -77,6 +85,17 @@ public class CustomerController {
         Customer c = customer.getById(request.getCustomerId());
         UUID correlationalId = order.create(request, c);
         return Response.created(URI.create("/customer/" + c.getId() + "/orders/" + correlationalId)).build();
+    }
+
+    @POST
+    @Path("/{id}/wallets")
+    @RolesAllowed("CUSTOMER")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response insertWallet(@PathParam("id") Long id, WalletInsertRequest request) {
+        Wallet wallet = request.toModel();
+        customer.insertWallet(id, wallet);
+        return Response.ok(wallet).build();
     }
 
 }

@@ -1,5 +1,6 @@
-package br.fiap.gff.user.services;
+package br.fiap.gff.user.usecases.services;
 
+import br.fiap.gff.user.models.Customer;
 import br.fiap.gff.user.models.Identity;
 import br.fiap.gff.user.repository.IdentityRepository;
 import br.fiap.gff.user.usecases.IdentityUseCase;
@@ -17,4 +18,12 @@ public class IdentityService implements IdentityUseCase {
         repository.persist(identity);
         return identity;
     }
+
+    @Override
+    public Customer getCustomerByUsername(String username) {
+        return repository.find("username", username)
+                .firstResult().getCustomer();
+    }
+
+
 }

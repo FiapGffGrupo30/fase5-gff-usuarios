@@ -1,4 +1,4 @@
-package br.fiap.gff.user.services;
+package br.fiap.gff.user.usecases.services;
 
 import br.fiap.gff.user.broker.OrderProducer;
 import br.fiap.gff.user.dto.OrderCreateRequest;
@@ -24,9 +24,9 @@ public class OrderService implements OrderUseCase {
     @Override
     @Transactional
     public UUID create(OrderCreateRequest request, Customer customer) {
-        Order order = Order.builder().customer(customer).correlationalId(UUID.randomUUID()).status("PENDING").build();
+        Order order = Order.builder().customer(customer).transactionId(UUID.randomUUID()).status("PENDING").build();
         repository.persist(order);
-        UUID correlationalId = order.getCorrelationalId();
+        UUID correlationalId = order.getTransactionId();
         producer.sendOrder(request, correlationalId);
         return correlationalId;
     }

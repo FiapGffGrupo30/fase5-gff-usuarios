@@ -1,7 +1,9 @@
-package br.fiap.gff.user.services;
+package br.fiap.gff.user.usecases.services;
 
 import br.fiap.gff.user.exceptions.CustomerNotFoundException;
+import br.fiap.gff.user.exceptions.CustomerTwoMainWalletsException;
 import br.fiap.gff.user.models.Customer;
+import br.fiap.gff.user.models.Wallet;
 import br.fiap.gff.user.repository.CustomerRepository;
 import br.fiap.gff.user.usecases.CustomerUseCase;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -26,7 +28,7 @@ public class CustomerService implements CustomerUseCase {
 
     @Override
     @Transactional
-    public Long createAnonymousCustomer(String nickname) {
+    public Long createAnonymous(String nickname) {
         Customer c = new Customer();
         c.setNickName(nickname);
         c.setCreatedAt(LocalDateTime.now());
@@ -39,4 +41,15 @@ public class CustomerService implements CustomerUseCase {
     public Customer getById(Long id) {
         return repository.findByIdOptional(id).orElseThrow(() -> new CustomerNotFoundException(id));
     }
+
+    @Override
+    public void insertWallet(Long customerId, Wallet wallet) {
+        Customer c = getById(customerId);
+        if (wallet.getMain() && c.getWallets().stream().anyMatch(Wallet::getMain)) {
+            throw new CustomerTwoMainWalletsException(customerId);
+        }
+        c.getWallets().add(wallet);
+        repository.persist(c);
+    }
+
 }

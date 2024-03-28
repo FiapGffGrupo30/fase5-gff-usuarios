@@ -4,7 +4,6 @@ import br.fiap.gff.user.models.Order;
 import br.fiap.gff.user.usecases.CustomerUseCase;
 import br.fiap.gff.user.usecases.OrderUseCase;
 import jakarta.annotation.security.PermitAll;
-import jakarta.annotation.security.RolesAllowed;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
@@ -26,7 +25,7 @@ public class AnonymousController {
     @Path("/{nickname}")
     @Produces(MediaType.TEXT_PLAIN)
     public Response login(String nickname) {
-        return Response.ok(customer.createAnonymousCustomer(nickname)).build();
+        return Response.ok(customer.createAnonymous(nickname)).build();
     }
 
     @GET

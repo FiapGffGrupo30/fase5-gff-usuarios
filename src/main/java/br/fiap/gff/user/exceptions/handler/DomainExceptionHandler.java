@@ -1,4 +1,4 @@
-package br.fiap.gff.user.exceptions;
+package br.fiap.gff.user.exceptions.handler;
 
 import br.fiap.gff.user.dto.ErrorResponse;
 import br.fiap.gff.user.exceptions.base.DomainException;
