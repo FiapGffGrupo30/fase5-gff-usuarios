@@ -11,8 +11,8 @@ import java.util.UUID;
 @ApplicationScoped
 public class OrderSendEvent {
 
-    @Channel("send-orders")
-    Emitter<OrderSendRequest> sendOrderEmmiter;
+    @Channel("create-event")
+    Emitter<OrderSendRequest> createOrderEmitter;
 
     public void send(OrderCreateRequest request, UUID correlationalId) {
         OrderSendRequest orderSendRequest = OrderSendRequest.builder()
@@ -20,6 +20,6 @@ public class OrderSendEvent {
                 .customerId(request.getCustomerId())
                 .items(request.getItems())
                 .build();
-        sendOrderEmmiter.send(orderSendRequest);
+        createOrderEmitter.send(orderSendRequest);
     }
 }
