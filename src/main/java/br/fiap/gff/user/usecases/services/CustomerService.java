@@ -43,6 +43,7 @@ public class CustomerService implements CustomerUseCase {
     }
 
     @Override
+    @Transactional
     public void insertWallet(Long customerId, Wallet wallet) {
         Customer c = getById(customerId);
         if (wallet.getMain() && c.getWallets().stream().anyMatch(Wallet::getMain)) {
