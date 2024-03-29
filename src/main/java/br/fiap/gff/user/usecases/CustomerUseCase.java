@@ -15,4 +15,6 @@ public interface CustomerUseCase {
 
     void sendNotification(Long customerId, String message);
 
+    void deleteById(Long id);
+
 }

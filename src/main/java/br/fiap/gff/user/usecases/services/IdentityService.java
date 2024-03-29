@@ -27,5 +27,15 @@ public class IdentityService implements IdentityUseCase {
                 .firstResult().getCustomer();
     }
 
+    @Override
+    public void deleteById(Long id) {
+        repository.deleteById(id);
+    }
+
+    @Override
+    public void deleteByCustomerId(Long customerId) {
+        repository.delete("customer.id", customerId);
+    }
+
 
 }

@@ -7,4 +7,8 @@ public interface IdentityUseCase {
     Identity save(Identity identity);
 
     Customer getCustomerByUsername(String username);
+
+    void deleteById(Long id);
+
+    void deleteByCustomerId(Long customerId);
 }

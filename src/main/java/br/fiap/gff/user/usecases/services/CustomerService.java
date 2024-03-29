@@ -58,4 +58,9 @@ public class CustomerService implements CustomerUseCase {
         Log.info("Sending notification to customer " + customerId + " with message: " + message);
     }
 
+    @Override
+    public void deleteById(Long id) {
+        repository.deleteById(id);
+    }
+
 }

@@ -29,7 +29,7 @@ import java.util.UUID;
 public class CustomerController {
 
     private final CustomerUseCase customer;
-    private final IdentityUseCase user;
+    private final IdentityUseCase identity;
     private final OrderUseCase order;
     private final TransactionUseCase transaction;
 
@@ -38,7 +38,7 @@ public class CustomerController {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response signIn(CustomerCreateRequest request) {
         Customer c = customer.save(request.toCustomer());
-        Identity u = user.save(request.toIdentity(c));
+        Identity u = identity.save(request.toIdentity(c));
         return Response.created(URI.create("/customer/" + c.getId())).entity(u).build();
     }
 
@@ -48,7 +48,7 @@ public class CustomerController {
     @Produces(MediaType.TEXT_PLAIN)
     public Response login(@Context SecurityContext ctx) {
         String username = ctx.getUserPrincipal().getName();
-        Customer c = user.getCustomerByUsername(username);
+        Customer c = identity.getCustomerByUsername(username);
         Wallet mainWallet = c.getWallets().stream().filter(Wallet::getMain).findFirst().orElse(null);
         UUID transactionId = transaction.create(c.getId(), mainWallet);
         Log.info(String.format("User %s logged in - Transaction ID: %s", username, transactionId));
@@ -96,6 +96,15 @@ public class CustomerController {
         Wallet wallet = request.toModel();
         customer.insertWallet(id, wallet);
         return Response.ok(wallet).build();
+    }
+
+    @DELETE
+    @Path("/{id}/deleteMe")
+    @RolesAllowed("CUSTOMER")
+    public Response deleteById(@PathParam("id") Long id) {
+        customer.deleteById(id);
+        identity.deleteByCustomerId(id);
+        return Response.noContent().build();
     }
 
 }
