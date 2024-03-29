@@ -8,7 +8,7 @@
                 {
                     "name": "port-user",
                     "containerPort": 8080,
-                    "hostPort": 8081,
+                    "hostPort": 8080,
                     "protocol": "tcp",
                     "appProtocol": "http"
                 }
