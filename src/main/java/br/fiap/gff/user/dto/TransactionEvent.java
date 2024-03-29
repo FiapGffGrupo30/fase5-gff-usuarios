@@ -13,6 +13,8 @@ public class TransactionEvent {
 
     Long customerId;
     UUID transactionId;
+    Long orderId;
+    Double orderPrice;
     OrderItemRequest[] items;
     String status;
 }
