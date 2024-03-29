@@ -29,7 +29,6 @@ jobs:
         restore-keys: ${{ runner.os }}-m2
 
     - name: Build with Gradlew
-      #run: mvn clean package -Dmaven.test.skip=true
       run: chmod 777 ./gradlew && ./gradlew build
 
     - name: Configure AWS credentials
