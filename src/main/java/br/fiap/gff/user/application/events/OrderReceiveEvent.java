@@ -1,4 +1,4 @@
-package br.fiap.gff.user.events;
+package br.fiap.gff.user.application.events;
 
 import br.fiap.gff.user.dto.OrderUpdateRequest;
 import br.fiap.gff.user.usecases.OrderUseCase;

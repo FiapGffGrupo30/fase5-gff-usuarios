@@ -1,7 +1,7 @@
 package br.fiap.gff.user.usecases.services;
 
 import br.fiap.gff.user.dto.OrderCreateRequest;
-import br.fiap.gff.user.events.OrderSendEvent;
+import br.fiap.gff.user.application.events.OrderSendEvent;
 import br.fiap.gff.user.models.Customer;
 import br.fiap.gff.user.models.Order;
 import br.fiap.gff.user.repository.OrderRepository;

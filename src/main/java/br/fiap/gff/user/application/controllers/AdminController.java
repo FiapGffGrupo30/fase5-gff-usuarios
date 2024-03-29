@@ -1,4 +1,4 @@
-package br.fiap.gff.user.controllers;
+package br.fiap.gff.user.application.controllers;
 
 import br.fiap.gff.user.usecases.CustomerUseCase;
 import jakarta.ws.rs.GET;
