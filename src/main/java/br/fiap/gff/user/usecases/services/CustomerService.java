@@ -6,6 +6,7 @@ import br.fiap.gff.user.models.Customer;
 import br.fiap.gff.user.models.Wallet;
 import br.fiap.gff.user.repository.CustomerRepository;
 import br.fiap.gff.user.usecases.CustomerUseCase;
+import io.quarkus.logging.Log;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +16,6 @@ import java.time.LocalDateTime;
 @ApplicationScoped
 @RequiredArgsConstructor
 public class CustomerService implements CustomerUseCase {
-
 
     private final CustomerRepository repository;
 
@@ -50,6 +50,11 @@ public class CustomerService implements CustomerUseCase {
         }
         c.getWallets().add(wallet);
         repository.persist(c);
+    }
+
+    @Override
+    public void sendNotification(Long customerId, String message) {
+        Log.info("Sending notification to customer " + customerId + " with message: " + message);
     }
 
 }

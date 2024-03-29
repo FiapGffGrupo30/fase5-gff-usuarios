@@ -9,9 +9,10 @@ import java.util.UUID;
 @Value
 @Builder
 @RegisterForReflection
-public class OrderSendRequest {
+public class TransactionEvent {
 
     Long customerId;
     UUID transactionId;
     OrderItemRequest[] items;
+    String status;
 }

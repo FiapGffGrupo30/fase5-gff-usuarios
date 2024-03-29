@@ -16,10 +16,11 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Entity
 @UserDefinition
+@Table(schema = "customer")
 public class Identity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Username

@@ -1,7 +1,7 @@
 package br.fiap.gff.user.application.events;
 
 import br.fiap.gff.user.dto.OrderCreateRequest;
-import br.fiap.gff.user.dto.OrderSendRequest;
+import br.fiap.gff.user.dto.TransactionEvent;
 import jakarta.enterprise.context.ApplicationScoped;
 import org.eclipse.microprofile.reactive.messaging.Channel;
 import org.eclipse.microprofile.reactive.messaging.Emitter;
@@ -9,15 +9,16 @@ import org.eclipse.microprofile.reactive.messaging.Emitter;
 @ApplicationScoped
 public class OrderSendEvent {
 
-    @Channel("create-event")
-    Emitter<OrderSendRequest> createOrderEmitter;
+    @Channel("order")
+    Emitter<TransactionEvent> eventEmitter;
 
     public void send(OrderCreateRequest request) {
-        OrderSendRequest orderSendRequest = OrderSendRequest.builder()
+        TransactionEvent transactionEvent = TransactionEvent.builder()
                 .transactionId(request.transactionId())
                 .customerId(request.customerId())
                 .items(request.items())
+                .status("PENDING")
                 .build();
-        createOrderEmitter.send(orderSendRequest);
+        eventEmitter.send(transactionEvent);
     }
 }

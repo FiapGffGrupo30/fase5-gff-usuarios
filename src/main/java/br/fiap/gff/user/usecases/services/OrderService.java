@@ -1,7 +1,7 @@
 package br.fiap.gff.user.usecases.services;
 
-import br.fiap.gff.user.dto.OrderCreateRequest;
 import br.fiap.gff.user.application.events.OrderSendEvent;
+import br.fiap.gff.user.dto.OrderCreateRequest;
 import br.fiap.gff.user.models.Customer;
 import br.fiap.gff.user.models.Order;
 import br.fiap.gff.user.repository.OrderRepository;
@@ -40,14 +40,14 @@ public class OrderService implements OrderUseCase {
     }
 
     @Override
-    public void updateStatusByCorrelationalId(UUID correlationalId, String status) {
-        Order o = filterByCorrelationalId(correlationalId);
-        o.setStatus(status);
-        repository.persist(o);
+    @Transactional
+    public void updateStatusByTransactionId(UUID transactionId, String status) {
+        Order o = filterByTransactionId(transactionId);
+        repository.update("status = ?1 where id = ?2", status, o.getId());
     }
 
-    private Order filterByCorrelationalId(UUID correlationalId) {
-        return repository.find("correlationalId = ?1", correlationalId).firstResult();
+    private Order filterByTransactionId(UUID transactionId) {
+        return repository.find("transactionId = ?1", transactionId).firstResult();
     }
 
 }

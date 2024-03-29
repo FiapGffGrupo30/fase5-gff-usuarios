@@ -15,6 +15,6 @@ public interface OrderUseCase {
 
     List<Order> filterAllByCustomerIdAndStatus(Long customerId, String status);
 
-    void updateStatusByCorrelationalId(UUID correlationalId, String status);
+    void updateStatusByTransactionId(UUID correlationalId, String status);
 
 }

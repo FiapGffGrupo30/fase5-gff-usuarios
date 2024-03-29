@@ -13,4 +13,6 @@ public interface CustomerUseCase {
 
     void insertWallet(Long customerId, Wallet wallet);
 
+    void sendNotification(Long customerId, String message);
+
 }

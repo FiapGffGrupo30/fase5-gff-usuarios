@@ -11,7 +11,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "CustomerOrder", indexes = @Index(name = "idx_transactionId", columnList = "transactionId"))
+@Table(schema = "customer", name = "CustomerOrder", indexes = @Index(name = "idx_transactionId", columnList = "transactionId"))
 public class Order {
 
     @Id

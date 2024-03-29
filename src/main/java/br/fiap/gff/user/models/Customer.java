@@ -14,6 +14,7 @@ import java.util.Set;
 @ToString
 @RequiredArgsConstructor
 @AllArgsConstructor
+@Table(schema = "customer")
 public class Customer {
 
     @Id
@@ -41,7 +42,8 @@ public class Customer {
     private Address address;
 
     @ElementCollection
-    @CollectionTable(name = "customer_wallets", joinColumns = @JoinColumn(name = "customer_id"))
+    @CollectionTable(schema = "customer", name = "customer_wallets",
+            joinColumns = @JoinColumn(name = "customer_id"))
     private Set<Wallet> wallets = new HashSet<>();
 
     private LocalDateTime createdAt;
