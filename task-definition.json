@@ -1,0 +1,75 @@
+{
+    "containerDefinitions": [
+        {
+            "name": "fase5-gff-usuarios",
+            "image": "746834987111.dkr.ecr.us-east-1.amazonaws.com/fase5-gff-usuarios:latest",
+            "cpu": 0,
+            "portMappings": [
+                {
+                    "name": "port-user",
+                    "containerPort": 8080,
+                    "hostPort": 8080,
+                    "protocol": "tcp",
+                    "appProtocol": "http"
+                }
+            ],
+            "essential": true,
+            "environment": [
+                {
+                    "name": "quarkus.redis.hosts",
+                    "value": "redis://default:uk7RHGB4vSxlSHTF062Mgvf8spif5wER@redis-15346.c74.us-east-1-4.ec2.cloud.redislabs.com:15346"
+                },
+                {
+                    "name": "quarkus.datasource.password",
+                    "value": "PGD3dsGqiyxn1FLJJ7yT"
+                },
+                {
+                    "name": "rabbitmq-password",
+                    "value": "FEDy9X_2pHcTKt9cYjDFpn0_-OefSIjG"
+                },
+                {
+                    "name": "rabbitmq-virtual-host",
+                    "value": "aozcktlz"
+                },
+                {
+                    "name": "quarkus.datasource.username",
+                    "value": "postgres"
+                },
+                {
+                    "name": "rabbitmq-username",
+                    "value": "aozcktlz"
+                }
+            ],
+            "environmentFiles": [],
+            "mountPoints": [],
+            "volumesFrom": [],
+            "ulimits": [],
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-create-group": "true",
+                    "awslogs-group": "/ecs/user-fase-5",
+                    "awslogs-region": "us-east-1",
+                    "awslogs-stream-prefix": "ecs"
+                },
+                "secretOptions": []
+            },
+            "systemControls": []
+        }
+    ],
+    "family": "user-fase-5",
+    "executionRoleArn": "arn:aws:iam::746834987111:role/ecsTaskExecutionRole",
+    "networkMode": "awsvpc",
+    "volumes": [],
+    "placementConstraints": [],
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "cpu": "2048",
+    "memory": "5120",
+    "runtimePlatform": {
+        "cpuArchitecture": "X86_64",
+        "operatingSystemFamily": "LINUX"
+    },
+    "tags": []
+}

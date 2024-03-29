@@ -1,4 +1,4 @@
-name: Java CI/CD to pagamento 
+name: Java CI/CD to Usuários 
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
       - 'src/**'
       - '.github/workflows/**'
       - 'gradle/wrapper/**'
-
+      - 'task-definition.json'
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -29,7 +29,6 @@ jobs:
         restore-keys: ${{ runner.os }}-m2
 
     - name: Build with Gradlew
-      #run: mvn clean package -Dmaven.test.skip=true
       run: chmod 777 ./gradlew && ./gradlew build
 
     - name: Configure AWS credentials
@@ -69,3 +68,19 @@ jobs:
 
     - name: Show image URI
       run: echo ${{ steps.build-spg30-user-image.outputs.image }}
+
+    - name: Fill in the new image ID in the Amazon ECS task definition
+      id: task-def
+      uses: aws-actions/amazon-ecs-render-task-definition@v1
+      with:
+        task-definition: task-definition.json
+        container-name: fase5-gff-usuarios
+        image: 746834987111.dkr.ecr.us-east-1.amazonaws.com/fase5-gff-usuarios:latest
+    
+    - name: Deploy Amazon ECS task definition
+      uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+      with:
+        task-definition: ${{ steps.task-def.outputs.task-definition }}
+        service: user-fase-5
+        cluster: fase5-gff-cluster
+        wait-for-service-stability: false
