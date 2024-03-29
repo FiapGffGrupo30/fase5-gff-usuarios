@@ -7,8 +7,8 @@
             "portMappings": [
                 {
                     "name": "port-user",
-                    "containerPort": 81,
-                    "hostPort": 81,
+                    "containerPort": 8080,
+                    "hostPort": 8081,
                     "protocol": "tcp",
                     "appProtocol": "http"
                 }
