@@ -7,4 +7,6 @@ import java.util.UUID;
 public interface TransactionUseCase {
     UUID create(Long customerId, Wallet paymentMethod);
 
+    void verify(Long customerId, UUID transactionId);
+
 }

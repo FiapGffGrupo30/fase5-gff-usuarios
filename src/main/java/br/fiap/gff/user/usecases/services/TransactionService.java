@@ -1,6 +1,7 @@
 package br.fiap.gff.user.usecases.services;
 
 import br.fiap.gff.user.dto.TransactionProperties;
+import br.fiap.gff.user.exceptions.TransactionNotAllowedException;
 import br.fiap.gff.user.models.Wallet;
 import br.fiap.gff.user.usecases.TransactionUseCase;
 import io.quarkus.redis.datasource.RedisDataSource;
@@ -25,8 +26,15 @@ public class TransactionService implements TransactionUseCase {
                 .customerId(customerId)
                 .paymentMethod(paymentMethod)
                 .build();
-        redisCommands.setex(transactionId.toString(), 240, tp);
+        redisCommands.setex(transactionId.toString(), 480, tp);
         return transactionId;
+    }
+
+    @Override
+    public void verify(Long customerId, UUID transactionId) {
+        TransactionProperties properties = redisCommands.get(transactionId.toString());
+        if (properties == null || !properties.customerId().equals(customerId))
+            throw new TransactionNotAllowedException(customerId, transactionId);
     }
 
 }

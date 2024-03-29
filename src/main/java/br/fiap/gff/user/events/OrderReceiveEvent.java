@@ -16,7 +16,7 @@ public class OrderReceiveEvent {
     @Incoming("update-orders")
     public void handle(JsonObject message) {
         OrderUpdateRequest response = message.mapTo(OrderUpdateRequest.class);
-        order.updateStatusByCorrelationalId(response.getCorrelationalId(), response.getStatus());
+        order.updateStatusByCorrelationalId(response.correlationalId(), response.status());
     }
 
 }

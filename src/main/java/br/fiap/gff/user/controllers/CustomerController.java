@@ -51,8 +51,7 @@ public class CustomerController {
         Customer c = user.getCustomerByUsername(username);
         Wallet mainWallet = c.getWallets().stream().filter(Wallet::getMain).findFirst().orElse(null);
         UUID transactionId = transaction.create(c.getId(), mainWallet);
-        String logMessage = String.format("User %s logged in - Transaction ID: %s", username, transactionId);
-        Log.info(logMessage);
+        Log.info(String.format("User %s logged in - Transaction ID: %s", username, transactionId));
         return Response.ok(transactionId.toString()).build();
     }
 
@@ -77,14 +76,15 @@ public class CustomerController {
     }
 
     @POST
-    @Path("/{id}/orders")
+    @Path("/{id}/orders/{transactionId}")
     @RolesAllowed("CUSTOMER")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response sendOrder(OrderCreateRequest request) {
-        Customer c = customer.getById(request.getCustomerId());
-        UUID correlationalId = order.create(request, c);
-        return Response.created(URI.create("/customer/" + c.getId() + "/orders/" + correlationalId)).build();
+    public Response sendOrder(@PathParam("id") Long id, @PathParam("transactionId") UUID transactionId, OrderCreateRequest request) {
+        transaction.verify(id, transactionId);
+        Customer c = customer.getById(request.customerId());
+        order.create(transactionId, request, c);
+        return Response.created(URI.create("/customer/" + c.getId() + "/orders/" + transactionId)).build();
     }
 
     @POST

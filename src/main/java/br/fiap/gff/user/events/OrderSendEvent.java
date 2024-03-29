@@ -17,8 +17,8 @@ public class OrderSendEvent {
     public void send(OrderCreateRequest request, UUID correlationalId) {
         OrderSendRequest orderSendRequest = OrderSendRequest.builder()
                 .transactionId(correlationalId)
-                .customerId(request.getCustomerId())
-                .items(request.getItems())
+                .customerId(request.customerId())
+                .items(request.items())
                 .build();
         createOrderEmitter.send(orderSendRequest);
     }
