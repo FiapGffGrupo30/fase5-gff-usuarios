@@ -7,7 +7,7 @@ on:
       - 'src/**'
       - '.github/workflows/**'
       - 'gradle/wrapper/**'
-
+      - 'task-definition.json'
 jobs:
   build:
     runs-on: ubuntu-latest
