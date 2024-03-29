@@ -75,7 +75,7 @@ jobs:
       with:
         task-definition: task-definition.json
         container-name: fase5-gff-usuarios
-        image: ${{ steps.build-spg30-user-image.outputs.image }}
+        image: 746834987111.dkr.ecr.us-east-1.amazonaws.com/fase5-gff-usuarios:latest
     
     - name: Deploy Amazon ECS task definition
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
