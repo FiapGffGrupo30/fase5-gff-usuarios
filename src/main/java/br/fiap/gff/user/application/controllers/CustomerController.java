@@ -76,15 +76,15 @@ public class CustomerController {
     }
 
     @POST
-    @Path("/{id}/orders/{transactionId}")
+    @Path("/{id}/orders")
     @RolesAllowed("CUSTOMER")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response sendOrder(@PathParam("id") Long id, @PathParam("transactionId") UUID transactionId, OrderCreateRequest request) {
-        transaction.verify(id, transactionId);
-        Customer c = customer.getById(request.customerId());
-        order.create(transactionId, request, c);
-        return Response.created(URI.create("/customer/" + c.getId() + "/orders/" + transactionId)).build();
+    public Response sendOrder(@PathParam("id") Long id, OrderCreateRequest input) {
+        transaction.verify(id, input.transactionId());
+        Customer c = customer.getById(input.customerId());
+        order.create(input, c);
+        return Response.created(URI.create("/customer/" + c.getId() + "/orders/" + input.transactionId())).build();
     }
 
     @POST

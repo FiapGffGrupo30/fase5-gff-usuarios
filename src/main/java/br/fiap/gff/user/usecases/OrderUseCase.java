@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public interface OrderUseCase {
 
-    void create(UUID transactionId, OrderCreateRequest request, Customer customer);
+    void create(OrderCreateRequest request, Customer customer);
 
     List<Order> filterAllByCustomerId(Long customerId);
 

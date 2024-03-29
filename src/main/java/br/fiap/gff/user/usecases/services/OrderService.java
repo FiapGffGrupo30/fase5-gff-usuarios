@@ -23,10 +23,10 @@ public class OrderService implements OrderUseCase {
 
     @Override
     @Transactional
-    public void create(UUID transactionId, OrderCreateRequest request, Customer customer) {
-        Order order = Order.builder().customer(customer).transactionId(transactionId).status("PENDING").build();
+    public void create(OrderCreateRequest request, Customer customer) {
+        Order order = Order.builder().customer(customer).transactionId(request.transactionId()).status("PENDING").build();
         repository.persist(order);
-        orderEvent.send(request, transactionId);
+        orderEvent.send(request);
     }
 
     @Override

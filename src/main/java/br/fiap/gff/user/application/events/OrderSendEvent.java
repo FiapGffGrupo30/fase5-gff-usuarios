@@ -6,17 +6,15 @@ import jakarta.enterprise.context.ApplicationScoped;
 import org.eclipse.microprofile.reactive.messaging.Channel;
 import org.eclipse.microprofile.reactive.messaging.Emitter;
 
-import java.util.UUID;
-
 @ApplicationScoped
 public class OrderSendEvent {
 
     @Channel("create-event")
     Emitter<OrderSendRequest> createOrderEmitter;
 
-    public void send(OrderCreateRequest request, UUID correlationalId) {
+    public void send(OrderCreateRequest request) {
         OrderSendRequest orderSendRequest = OrderSendRequest.builder()
-                .transactionId(correlationalId)
+                .transactionId(request.transactionId())
                 .customerId(request.customerId())
                 .items(request.items())
                 .build();

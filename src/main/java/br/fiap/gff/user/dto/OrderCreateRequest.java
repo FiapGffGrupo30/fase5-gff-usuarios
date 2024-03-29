@@ -1,5 +1,7 @@
 package br.fiap.gff.user.dto;
 
-public record OrderCreateRequest(Long customerId, OrderItemRequest[] items) {
+import java.util.UUID;
+
+public record OrderCreateRequest(Long customerId, UUID transactionId, OrderItemRequest[] items) {
 
 }
