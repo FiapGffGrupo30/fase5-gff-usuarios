@@ -59,6 +59,7 @@ public class CustomerService implements CustomerUseCase {
     }
 
     @Override
+    @Transactional
     public void deleteById(Long id) {
         repository.deleteById(id);
     }
