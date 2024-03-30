@@ -46,6 +46,13 @@ public class OrderService implements OrderUseCase {
         repository.update("status = ?1 where id = ?2", status, o.getId());
     }
 
+    @Override
+    @Transactional
+    public void deleleByUserId(Long customerId) {
+
+        repository.delete("customer.id = ?1", customerId);
+    }
+
     private Order filterByTransactionId(UUID transactionId) {
         return repository.find("transactionId = ?1", transactionId).firstResult();
     }

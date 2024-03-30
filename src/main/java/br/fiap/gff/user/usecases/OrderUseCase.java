@@ -17,4 +17,5 @@ public interface OrderUseCase {
 
     void updateStatusByTransactionId(UUID correlationalId, String status);
 
+    void deleleByUserId(Long id);
 }

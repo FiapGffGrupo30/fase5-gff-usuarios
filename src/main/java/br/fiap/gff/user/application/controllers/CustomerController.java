@@ -102,6 +102,8 @@ public class CustomerController {
     @Path("/{id}/deleteMe")
     @RolesAllowed("CUSTOMER")
     public Response deleteById(@PathParam("id") Long id) {
+        identity.deleteByCustomerId(id);
+        order.deleleByUserId(id);
         customer.deleteById(id);
         identity.deleteByCustomerId(id);
         return Response.noContent().build();

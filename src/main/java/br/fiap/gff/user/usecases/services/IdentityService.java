@@ -33,6 +33,7 @@ public class IdentityService implements IdentityUseCase {
     }
 
     @Override
+    @Transactional
     public void deleteByCustomerId(Long customerId) {
         repository.delete("customer.id", customerId);
     }
